@@ -1,15 +1,25 @@
 # dataclassconfig
 
+[![License](https://img.shields.io/pypi/l/dataclassconfig.svg)](https://pypi.python.org/pypi/dataclassconfig/)
+[![Version](https://img.shields.io/pypi/v/dataclassconfig.svg)](https://pypi.python.org/pypi/dataclassconfig/)
+[![Python versions](https://img.shields.io/pypi/pyversions/dataclassconfig.svg)](https://pypi.python.org/pypi/dataclassconfig/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+
+The simplest interface for working with configuration files. Describe the structure of your configuration file as a dataclass. Use inheritance and composition to describe the complex hierarchical structure of a configuration file.
+
 ## Installation
 
-```
+```bash
 pip install dataclassconfig
 ```
 
-## Usage
-Describe the structure of your config file like a `dataclass` and inherit it from `Сonfig`
+## Requirements
 
-For example:
+Minimum Python version supported by `dataclassconfig` is 3.6
+
+## Usage
+
+Describe the structure of your config file like a `dataclass` and inherit it from `Сonfig`
 
 ```python
 from dataclassconfig import Config
@@ -29,8 +39,6 @@ class ServerConfig(Config):
 ```
 
 Create a configuration file according to the described structure in YML or JSON format
-
-For example:
 
 ```yaml
 # server-config.yml
@@ -57,7 +65,7 @@ db:
 }
 ```
 
-Load the config file using your class.
+Load the config file using your class
 
 ```python
 config = ServerConfig.load("server-config.yml")
@@ -85,3 +93,11 @@ config :- ServerConfig(
 
 config.db.username :- 'demouser'
 ```
+
+## Gratitude
+
+This module works thanks to the implementation in the [dacite](https://github.com/konradhalas/dacite) project
+
+## Authors
+
+Created by Vladislav A. Proskurov
