@@ -52,7 +52,7 @@ db:
 ```
 
 ```json
-# server-config.json
+// server-config.json
 {
     "root": "~/server",
     "db": {
