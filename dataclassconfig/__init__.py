@@ -5,13 +5,15 @@ from pathlib import Path
 import dacite
 import yaml  # type: ignore
 
+T = tp.TypeVar("T", bound="Config")
+
 
 class Config:
     def __init_subclass__(cls):
         dataclass(cls)
 
     @classmethod
-    def load(cls, fp):
+    def load(cls: tp.Type[T], source) -> T:
         """loads configuration state from file-like object
 
         Args:
@@ -20,21 +22,21 @@ class Config:
         Returns:
             configuration state
         """
-        data = fp
-        if isinstance(fp, str):
-            fp = Path(fp)
-        if isinstance(fp, Path):
-            with open(fp.expanduser(), "rb") as file:
+        data = source
+        if isinstance(source, str):
+            source = Path(source)
+        if isinstance(source, Path):
+            with open(source.expanduser(), "rb") as file:
                 data = file.read()
         try:
             state = yaml.safe_load(data)
-        except Exception:
+        except Exception:  # pylint: disable=broad-except
             data = data.read()
             state = yaml.safe_load(data)
         return cls.from_dict(state)
 
     @classmethod
-    def from_dict(cls, state: tp.Dict):
+    def from_dict(cls: tp.Type[T], state: tp.Dict[str, tp.Any]) -> T:
         """loads the configuration state from a dictionary
 
         Args:
